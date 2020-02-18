@@ -27,6 +27,7 @@ function collection_install(){
     title varchar(255) NOT NULL,
     description LONGTEXT NOT NULL,
     url_file LONGTEXT NOT NULL,
+    release_date DATE NOT NULL,
     status TINYINT(1) NOT NULL,
     media_type int(11) NOT NULL,
     created_by varchar(50) NOT NULL,

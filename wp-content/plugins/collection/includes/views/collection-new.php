@@ -34,6 +34,14 @@ if(!$isNew){
                     <textarea name="description" id="description" class="regular-text" placeholder="Description" rows="3" cols="30"></textarea>                    
                 </td>
             </tr>
+            <tr class="row-release-date">
+                <th scope="row">
+                    <label for="release-date"><?php _e('Release Date : ', 'cln'); ?></label>
+                </th>
+                <td colspan="2">
+                   <input type="date" name="release_date" id="release_date" class="regular-text" style="width:225px;" placeholder="<?php echo esc_attr('DD MMM YYYY', 'cln'); ?>" value="" autocomplete="off" />                   
+                </td>
+            </tr>
             <tr class="row-media_type">
                 <th scope="row">
                     <label for="media_type"><?php _e('Media Type Collection Banner :', 'cln');?></label>

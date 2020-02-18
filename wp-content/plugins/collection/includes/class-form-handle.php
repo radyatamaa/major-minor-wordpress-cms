@@ -58,6 +58,7 @@ class Collection_Form_Handler
         $media_type = isset($_POST['media_type']) ? intval($_POST['media_type']) : 0;
         $status = isset($_POST['status']) ?intval( $_POST['status']) : 0 ;
         $is_front_image = isset($_POST['is_front_image']) ?intval( $_POST['is_front_image']) : 0 ;
+        if($_POST['release_date'] !== '') { $release_date = date('Y-m-d',strtotime($_POST['release_date'])); } else { $release_date = ''; }
         // $file_collection = reArrayFiles($_FILES['file_collection']['tmp_name']) ? $_FILES["file_collection"] : [];
         $user = wp_get_current_user();
        
@@ -121,7 +122,8 @@ class Collection_Form_Handler
             'description' => $description,
             'url_file' => isset($imagePath) ? strval($imagePath) : '#',
             'status' => $status,
-            'media_type' => $media_type
+            'media_type' => $media_type,
+            'release_date' => $release_date
         );
 
         //New or Edit

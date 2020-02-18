@@ -113,22 +113,39 @@ function get_collection_by_id($id){
     return $items;
  }
  
+// Compress image
+function compressImage($source, $destination, $quality) {
 
+    $info = getimagesize($source);
+  
+    if ($info['mime'] == 'image/jpeg') 
+      $image = imagecreatefromjpeg($source);
+  
+    elseif ($info['mime'] == 'image/gif') 
+      $image = imagecreatefromgif($source);
+  
+    elseif ($info['mime'] == 'image/png') 
+      $image = imagecreatefrompng($source);
+  
+    imagejpeg($image, $destination, $quality);
+  }
+  
 function uploadBlobCollectionList($blobName,$realPath,$file_name,$index) {
     
+    // // Getting file name
+    // $filename = $_FILES[$file_name]['name'];
+    // Location
+    $location = "images/".$blobName;
+
+    // Compress Image
+    // compressImage($_FILES[$file_name]['tmp_name'][$index],$location,60);
+
     $accesskey = "KEUWRZs62sQxfwyBNVrpHCCfW87Jhx953tXeyhZGa8sLtBu2XmijsyCOitQa/G7ksDXx+UCxmoowds1heCHjWw==";
     $storageAccount = 'mijorminorstorage';
-    // $filetoUpload = realpath('./' . $blobName);
     $filetoUpload = $_FILES[$file_name]['tmp_name'][$index];
+    // $filetoUpload = $location;
     $containerName = 'major-minor';
-    // $blobName = 'image.jpg';
     $media_type =  $_FILES[$file_name]['type'][$index];
-    // if($media_type == 'image/jpeg' || $media_type == 'image/jpg' || $media_type == 'image/png'){
-    //     $unique_file = uniqid() . '.jpeg';
-    // }elseif($media_type == 'video/mp4'){
-    //     $unique_file = uniqid() . '.mp4';
-    // }
-   
     $destinationURL = "https://$storageAccount.blob.core.windows.net/$containerName/$blobName";
 
     $currentDate = gmdate("D, d M Y H:i:s T", time());
@@ -242,7 +259,8 @@ if($media_type == 'image/jpeg' || $media_type == 'image/jpg' || $media_type == '
 
     curl_close($ch);
     }
-    
+    // unlink('../../' . $location);
+
     return $destinationURL;
 
     
@@ -373,6 +391,6 @@ function delete_collection($id){
             return new WP_Error('sql-failed', __('Warning : ' . $wpdb->last_error, 'cln'));
         }
 }
-    
+
 
 ?>

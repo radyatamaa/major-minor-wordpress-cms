@@ -52,6 +52,26 @@ if(!$isNew){
                     <?php } ?>
                 </td>
             </tr>
+            <tr class="row-release-date">
+                <th scope="row">
+                    <label for="release-date"><?php _e('Release Date : ', 'cln'); ?></label>
+                </th>
+                <td colspan="2"><?php 
+                
+                $convertStart_date = date_create($item->release_date);
+                
+                $release_date = $convertStart_date->format('Y-m-d');    
+                    if($action == 'view'){
+                        
+                ?>
+                   <input type="date" name="release_date" id="release_date" class="regular-text" style="width:225px;" placeholder="<?php echo esc_attr('DD MMM YYYY', 'cln'); ?>" value="<?php echo  $release_date; ?>" autocomplete="off" readonly />
+                    <?php }
+                    else if($action == 'edit'){
+                        ?>
+                    <input type="date" name="release_date" id="release_date" class="regular-text" style="width:225px;" placeholder="<?php echo esc_attr('DD MMM YYYY', 'cln'); ?>" value="<?php echo $release_date; ?>" autocomplete="off" />
+                    <?php } ?>
+                </td>
+            </tr>
             <tr class="row-media_type">
                 <th scope="row">
                     <label for="media_type"><?php _e('Media Type Collection Banner :', 'cln');?></label>
