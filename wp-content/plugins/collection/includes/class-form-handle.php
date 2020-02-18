@@ -57,6 +57,7 @@ class Collection_Form_Handler
         $file_collections = file_exists($_FILES['file_collection']['tmp_name'][0]) ? $_FILES["file_collection"] : '';
         $media_type = isset($_POST['media_type']) ? intval($_POST['media_type']) : 0;
         $status = isset($_POST['status']) ?intval( $_POST['status']) : 0 ;
+        $is_front_image = isset($_POST['is_front_image']) ?intval( $_POST['is_front_image']) : 0 ;
         // $file_collection = reArrayFiles($_FILES['file_collection']['tmp_name']) ? $_FILES["file_collection"] : [];
         $user = wp_get_current_user();
        
@@ -128,7 +129,7 @@ class Collection_Form_Handler
             $insert_id = create_collection($fields,$imagePathCollections);
         } else {
             $fields['id'] = $field_id;
-            $insert_id = update_collection($fields,$imagePathCollections);
+            $insert_id = update_collection($fields,$imagePathCollections,$is_front_image);
         }
 
         if (is_wp_error($insert_id)) {

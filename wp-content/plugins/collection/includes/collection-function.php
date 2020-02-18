@@ -299,7 +299,7 @@ function create_collection($args = array(),$listImage)
         }
         
         $id = $wpdb->insert_id;
-        foreach($listImage as $image){
+        foreach($listImage as $index => $image){
             $create = array(
             'created_by' => $current_user->user_login,
             'media_type' => 1,
@@ -308,11 +308,17 @@ function create_collection($args = array(),$listImage)
             'is_active' => 1,
             'url_file' => $image           
         );
+        if($index == 0){
+            $collection_media_update = array(
+                'is_front_image' => 1
+            );
+            $create = wp_parse_args($create, $collection_media_update);
+        }
         $wpdb->insert($collection_media , $create);          
         }        
         return false;
     }
-function update_collection($args = array(),$listImage){
+function update_collection($args = array(),$listImage,$is_front_image){
         global $wpdb;
         $table_name= $wpdb->prefix.'collection';
         $collection_media= $wpdb->prefix.'collection_media';
@@ -330,7 +336,13 @@ function update_collection($args = array(),$listImage){
         if (!$wpdb->result) {
             return new WP_Error('sql-failed', __('Warning : ' . $wpdb->last_error, 'cln'));
         }  
-
+        if($is_front_image != null || $is_front_image != ''){
+            $collection_media_update = array(
+                'is_front_image' => 1
+            );
+            $wpdb->update($collection_media,array('is_front_image' => 0),array('collection_id' => $id));
+            $wpdb->update($collection_media,$collection_media_update,array('id' => $is_front_image));
+        }
         foreach($listImage as $image){
             $create = array(
             'created_by' => $current_user->user_login,

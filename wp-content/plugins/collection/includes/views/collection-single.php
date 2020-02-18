@@ -109,15 +109,22 @@ if(!$isNew){
                     <td>
                     <?php
                         if($collection_medias != null){
-                            
+                            echo "<div style='padding-top:8px'><i>Choose 1 image as profile picture<i></div>";
                             foreach($collection_medias as $index => $collection_media){
                                 $id = 5 . $index;
                                 echo "<br>";
                                 if($action == 'edit'){
                                 submit_button('X(' . $collection_media->id . ')', 'primary', 'delete_image'); 
-                                }
-                                echo "<img style='height:300px; width:300px; padding-left:21px;' name='preview' id='$index' src='$collection_media->url_file' />";
-                              
+                                }                                
+                                echo "<img style='height:300px; width:300px; margin-top:-20px' name='preview' id='$index' src='$collection_media->url_file' />";
+
+                                if($action == 'view'){
+                                    $is_checked_profile =($collection_media->is_front_image) ?'checked="checked"':'';
+                                    echo "<input type='checkbox' style='margin-bottom: 5px' name='is_front_image' id='is_front_image' class='regular-text' value='$collection_media->id' {$is_checked_profile} disabled/>"; 
+                                 }elseif($action == 'edit'){
+                                    $is_checked_profile =($collection_media->is_front_image) ?'checked="checked"':'';
+                                    echo "<input type='checkbox' style='margin-bottom: 5px' name='is_front_image' id='is_front_image' class='regular-text' value='$collection_media->id' {$is_checked_profile} />"; 
+                                 }
                                 // echo "<button type='button' id='$id' onClick='deleteImage($index,$id)'>X</button>";
                                 // echo "<input type='submit' id='$id' value='X'>";
                             }
@@ -174,33 +181,38 @@ if(!$isNew){
 
 
 //  }
-    CKEDITOR.replace('description' , {
-        toolbarGroups: [
-            { name: 'document', groups: [ 'mode', 'document', 'doctools' ] },
-            { name: 'clipboard', groups: [ 'clipboard', 'undo' ] },
-            { name: 'editing', groups: [ 'find', 'selection', 'spellchecker', 'editing' ] },
-            { name: 'forms', groups: [ 'forms' ] },
-            '/',
-            { name: 'basicstyles', groups: [ 'basicstyles', 'cleanup' ] },
-            { name: 'paragraph', groups: [ 'list', 'indent', 'blocks', 'align', 'bidi', 'paragraph' ] },
-            { name: 'links', groups: [ 'links' ] },
-            { name: 'insert', groups: [ 'insert' ] },
-            '/',
-            { name: 'styles', groups: [ 'styles' ] },
-            { name: 'colors', groups: [ 'colors' ] },
-            { name: 'tools', groups: [ 'tools' ] },
-            { name: 'others', groups: [ 'others' ] },
-            { name: 'description', groups: [ 'description' ] },
-            {name: 'Image' , groups:['Image']}
-        ],
-        removeButtons: 'Smiley,Scayt,Form,Checkbox,Radio,TextField,Textarea,Select,Button,ImageButton,HiddenField,Language,Flash'
-    });
+    // CKEDITOR.replace('description' , {
+    //     toolbarGroups: [
+    //         { name: 'document', groups: [ 'mode', 'document', 'doctools' ] },
+    //         { name: 'clipboard', groups: [ 'clipboard', 'undo' ] },
+    //         { name: 'editing', groups: [ 'find', 'selection', 'spellchecker', 'editing' ] },
+    //         { name: 'forms', groups: [ 'forms' ] },
+    //         '/',
+    //         { name: 'basicstyles', groups: [ 'basicstyles', 'cleanup' ] },
+    //         { name: 'paragraph', groups: [ 'list', 'indent', 'blocks', 'align', 'bidi', 'paragraph' ] },
+    //         { name: 'links', groups: [ 'links' ] },
+    //         { name: 'insert', groups: [ 'insert' ] },
+    //         '/',
+    //         { name: 'styles', groups: [ 'styles' ] },
+    //         { name: 'colors', groups: [ 'colors' ] },
+    //         { name: 'tools', groups: [ 'tools' ] },
+    //         { name: 'others', groups: [ 'others' ] },
+    //         { name: 'description', groups: [ 'description' ] },
+    //         {name: 'Image' , groups:['Image']}
+    //     ],
+    //     removeButtons: 'Smiley,Scayt,Form,Checkbox,Radio,TextField,Textarea,Select,Button,ImageButton,HiddenField,Language,Flash'
+    // });
 
     function deleteImage(id,button_id){
         debugger
         document.getElementById(id).remove();
         return document.getElementById(button_id).remove();
     }
+
+    $(".regular-text").change(function() {
+     $(".regular-text").prop('checked', false);
+     $(this).prop('checked', true);
+    });
 
     function previewImages() {
     debugger
