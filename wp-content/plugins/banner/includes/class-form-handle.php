@@ -58,7 +58,9 @@ class Banner_Form_Handler
             $imagePath = uploadBlob($file['name'],$file['tmp_name'],'file');
             if (!$file && is_wp_error($imagePath)) {
             $errors[] = __('Error : ' . $imagePath->get_error_messages(), 'bnr');
-        }
+            }
+            $deleteImageTemp =  dirname(__FILE__)."/".$unique_file;
+            unlink($deleteImageTemp);
         } 
         //is current_event?
         require_once ABSPATH . 'wp-admin/includes/upgrade.php';

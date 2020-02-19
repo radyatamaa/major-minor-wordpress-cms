@@ -71,10 +71,12 @@ class Collection_Form_Handler
             $unique_file = uniqid() . '.mp4';
             $file_banner['name'] =  $unique_file;
             }
-            $imagePath = uploadBlob($file_banner['name'],$file_banner['tmp_name'],'file_banner');
+            $imagePath = uploadImageCollectionBlob($file_banner['name'],$file_banner['tmp_name'],'file_banner');
             if (!$file_banner && is_wp_error($imagePath)) {
             $errors[] = __('Error : ' . $imagePath->get_error_messages(), 'bnr');
             }
+            $deleteImageTemp =  dirname(__FILE__)."/".$unique_file;
+            unlink($deleteImageTemp);
             
         } 
         if($file_collections !== ''){
@@ -86,6 +88,8 @@ class Collection_Form_Handler
                  if (!$file_collections && is_wp_error($imagePath)) {
                  $errors[] = __('Error : ' . $imagePath->get_error_messages(), 'bnr');
             }
+            $deleteImageTemp =  dirname(__FILE__)."/".$unique_file;
+            unlink($deleteImageTemp);
             array_push($imagePathCollections,$imagePathCollection);
             }
         }

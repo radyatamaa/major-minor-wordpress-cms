@@ -140,20 +140,27 @@ function upload_image_blob()
 
 
 function uploadBlob($blobName,$realPath,$file_name) {
-    
+         
     $accesskey = "KEUWRZs62sQxfwyBNVrpHCCfW87Jhx953tXeyhZGa8sLtBu2XmijsyCOitQa/G7ksDXx+UCxmoowds1heCHjWw==";
     $storageAccount = 'mijorminorstorage';
-    // $filetoUpload = realpath('./' . $blobName);
-    $filetoUpload = $_FILES[$file_name]['tmp_name'];
-    $containerName = 'major-minor';
-    // $blobName = 'image.jpg';
+    
     $media_type =  $_FILES[$file_name]['type'];
-    // if($media_type == 'image/jpeg' || $media_type == 'image/jpg' || $media_type == 'image/png'){
-    //     $unique_file = uniqid() . '.jpeg';
-    // }elseif($media_type == 'video/mp4'){
-    //     $unique_file = uniqid() . '.mp4';
-    // }
    
+    if($media_type != 'video/mp4'){
+        
+    // Location
+        $location =  dirname(__FILE__)."/".$blobName;
+
+    // Compress Image
+        compressImage($_FILES[$file_name]['tmp_name'],$location,60);
+
+        $filetoUpload = $location;
+
+    }else{        
+        $filetoUpload = $_FILES[$file_name]['tmp_name'];
+    }
+
+    $containerName = 'major-minor';
     $destinationURL = "https://$storageAccount.blob.core.windows.net/$containerName/$blobName";
 
     $currentDate = gmdate("D, d M Y H:i:s T", time());
