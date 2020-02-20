@@ -75,8 +75,10 @@ class Collection_Form_Handler
             if (!$file_banner && is_wp_error($imagePath)) {
             $errors[] = __('Error : ' . $imagePath->get_error_messages(), 'bnr');
             }
+            if($media_type != 'video/mp4'){               
             $deleteImageTemp =  dirname(__FILE__)."/".$unique_file;
             unlink($deleteImageTemp);
+            }
             
         } 
         if($file_collections !== ''){

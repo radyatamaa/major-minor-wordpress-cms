@@ -57,7 +57,7 @@ if(!$isNew){
                     <label for="release-date"><?php _e('Release Date : ', 'cln'); ?></label>
                 </th>
                 <td colspan="2"><?php 
-                
+
                 $convertStart_date = date_create($item->release_date);
                 
                 $release_date = $convertStart_date->format('Y-m-d');    
@@ -114,7 +114,11 @@ if(!$isNew){
                     <td>
                     <?php
                             if($item->url_file != null || $item->url_file != ''){
+                                if((strstr( $item->url_file, '.jpeg' )) || (strstr( $item->url_file, '.jpg' )) || (strstr( $item->url_file, '.png' ))){                                   
                                 echo "<img style='height:300px; width:300px; padding-left:21px;' src='$item->url_file' />";
+                                }elseif(strstr( $item->url_file, '.mp4' )){
+                                echo "<video width='400' controls><source src='$item->url_file' type='video/mp4'></video>";
+                                }
                             }
                         ?>   
                         <input type="file" name="file_banner" id="file_banner" class="regular-text" style="width:225px;" placeholder="<?php echo esc_attr('Choose Image or Video..', 'scdl'); ?>" accept="image/png, image/jpg, image/jpeg,video/mp4" onchange="return checkImage();"/>
